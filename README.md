@@ -1,61 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Kantin POS - Aplikasi Point of Sale Sederhana
 
-## About Laravel
+Kantin POS adalah aplikasi Point of Sale (POS) berbasis web yang dirancang untuk mengelola pesanan dan transaksi di lingkungan seperti kantin perkantoran atau kafe. Aplikasi ini dibangun menggunakan **Laravel 12** dengan frontend **CSS murni** dan database **PostgreSQL**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi ini memiliki tiga peran pengguna yang berbeda dengan alur kerja yang jelas: **Divisi (pelanggan)**, **Outlet (penjual/dapur)**, dan **Admin (manajemen)**.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Fitur Utama
 
-## Learning Laravel
+### 1. Peran Admin
+- **Dashboard Terpusat:** Melihat pesanan baru yang masuk dan memerlukan persetujuan.
+- **Manajemen Pesanan:** Menyetujui pesanan dari Divisi untuk diteruskan ke Outlet.
+- **Manajemen Keuangan:** Mencatat pembayaran untuk setiap pesanan dan melacak sisa tagihan.
+- **Rekap Transaksi:** Melihat riwayat semua transaksi yang telah selesai, lengkap dengan detail item, kuantitas, dan harga.
+- **Manajemen Master Data:**
+  - CRUD (Create, Read, Update, Delete) untuk data Outlet (lokasi fisik).
+  - CRUD untuk Akun Pengguna Outlet (kasir).
+  - CRUD untuk Akun Pengguna Divisi (pelanggan).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Peran Outlet
+- **Manajemen Menu:** CRUD penuh untuk produk/menu, termasuk kemampuan untuk mengunggah gambar produk.
+- **Manajemen Stok:** Memperbarui jumlah stok harian untuk setiap menu.
+- **Proses Pesanan:** Menerima pesanan yang telah disetujui oleh Admin dan menandainya sebagai "Selesai" setelah disiapkan.
+- **Riwayat Transaksi:** Melihat daftar semua transaksi yang telah diselesaikan oleh outlet tersebut.
+- **Profil Terisolasi:** Setiap akun Outlet hanya dapat melihat dan mengelola data yang relevan dengan outlet tempat mereka ditugaskan.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 3. Peran Divisi
+- **Katalog Produk Global:** Melihat semua menu yang tersedia dari semua outlet dalam satu tampilan kartu yang modern.
+- **Pemesanan Mudah:** Menambahkan produk dari berbagai outlet ke dalam satu keranjang dan mengirimkan pesanan. Sistem akan secara otomatis memecahnya menjadi pesanan terpisah untuk setiap outlet.
+- **Riwayat Pesanan:** Melihat riwayat semua pesanan yang pernah dibuat beserta statusnya (Pending, Approved, Completed).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Fitur Umum
+- **Manajemen Profil:** Semua pengguna dapat mengubah nama, username, dan password mereka sendiri dengan aman.
+- **Sistem Login:** Otentikasi berbasis Username dan Password.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Teknologi yang Digunakan
+- **Backend:** Laravel 12
+- **Frontend:** PHP Blade & CSS Murni (Tanpa framework JS/CSS)
+- **Database:** PostgreSQL
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## Panduan Instalasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Clone Repositori
+```bash
+git clone https://github.com/username-anda/nama-repositori.git
+cd nama-repositori
+```
 
-## Code of Conduct
+### 2. Install Dependensi
+Pastikan Anda memiliki Composer terinstal.
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Konfigurasi Lingkungan (.env)
+Salin file `.env.example` menjadi `.env`.
+```bash
+cp .env.example .env
+```
+Buka file `.env` dan sesuaikan konfigurasi database Anda, terutama:
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=pos_laravel_app
+DB_USERNAME=postgres
+DB_PASSWORD=password_anda
+```
 
-## Security Vulnerabilities
+### 4. Generate Application Key
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. Jalankan Migrasi & Seeding
+Perintah ini akan membuat semua tabel database dan mengisinya dengan data awal (akun admin, outlet, dan divisi).
+```bash
+php artisan migrate:fresh --seed
+```
 
-## License
+### 6. Buat Symbolic Link untuk Storage
+```bash
+php artisan storage:link
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 7. Jalankan Server
+```bash
+php artisan serve
+```
+Aplikasi sekarang akan berjalan di [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+---
+
+## Akun Default
+Anda dapat login menggunakan akun default yang dibuat oleh seeder:
+
+**Admin:**
+- Username: `admin`
+- Password: `password`
+
+**Outlet:**
+- Username: `outlet_pusat`
+- Password: `password`
+
+**Divisi:**
+- Username: `divisi_marketing`
+- Password: `password`
+
+---
+
+Dibuat dengan ❤️ menggunakan Laravel.
