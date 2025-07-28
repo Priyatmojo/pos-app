@@ -23,26 +23,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($approvedOrders as $order)
-                        <tr>
-                            <td>#{{ $order->id }}</td>
-                            <td>{{ $order->user->name }}</td>
-                            <td>{{ $order->created_at->format('d M Y, H:i') }}</td>
-                            <td>
-                                 <form action="{{ route('outlet.completeOrder', $order) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-primary">Selesaikan</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4" style="text-align: center; padding: 2rem;">
-                                Tidak ada pesanan yang perlu diproses.
-                            </td>
-                        </tr>
-                        @endforelse
+                          @forelse ($activeOrders as $order)
+    <tr>
+        <td>#{{ $order->id }}</td>
+        <td>{{ $order->user->name }}</td>
+        <td><span class="status status-{{ $order->status }}">{{ $order->status }}</span></td>
+        <td>
+            {{-- Tombol Aksi Dinamis Berdasarkan Status --}}
+            @if($order->status == 'approved')
+                <form action="{{ route('outlet.orders.prepare', $order) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-sm btn-primary">Mulai Siapkan</button>
+                </form>
+            @elseif($order->status == 'preparing')
+                <form action="{{ route('outlet.orders.ready', $order) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-sm btn-warning">Siap Diambil</button>
+                </form>
+            @elseif($order->status == 'ready')
+                <form action="{{ route('outlet.completeOrder', $order) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-sm btn-success">Selesaikan</button>
+                </form>
+            @endif
+        </td>
+    </tr>
+    @empty
+    <tr><td colspan="4" class="text-center" style="padding: 2rem;">Tidak ada pesanan aktif.</td></tr>
+    @endforelse
                     </tbody>
                 </table>
             </div>
