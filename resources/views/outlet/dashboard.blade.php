@@ -18,31 +18,24 @@
                         <tr>
                             <th>ID Pesanan</th>
                             <th>Pemesan (Divisi)</th>
-                            <th>Tanggal Pesan</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                          @forelse ($activeOrders as $order)
+    @forelse ($activeOrders as $order)
     <tr>
         <td>#{{ $order->id }}</td>
         <td>{{ $order->user->name }}</td>
-        <td><span class="status status-{{ $order->status }}">{{ $order->status }}</span></td>
+        <td><span class="status status-{{ $order->status }}">{{ $order->status == 'approved' ? 'Baru Masuk' : 'Sedang Dibuat' }}</span></td>
         <td>
-            {{-- Tombol Aksi Dinamis Berdasarkan Status --}}
             @if($order->status == 'approved')
                 <form action="{{ route('outlet.orders.prepare', $order) }}" method="POST">
                     @csrf
                     @method('PATCH')
-                    <button type="submit" class="btn btn-sm btn-primary">Mulai Siapkan</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Terima Pesanan</button>
                 </form>
             @elseif($order->status == 'preparing')
-                <form action="{{ route('outlet.orders.ready', $order) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <button type="submit" class="btn btn-sm btn-warning">Siap Diambil</button>
-                </form>
-            @elseif($order->status == 'ready')
                 <form action="{{ route('outlet.completeOrder', $order) }}" method="POST">
                     @csrf
                     @method('PATCH')
@@ -54,7 +47,7 @@
     @empty
     <tr><td colspan="4" class="text-center" style="padding: 2rem;">Tidak ada pesanan aktif.</td></tr>
     @endforelse
-                    </tbody>
+</tbody>
                 </table>
             </div>
         </div>

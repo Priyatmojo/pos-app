@@ -21,42 +21,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($myOrders as $order)
-                    <tr>
-                        <td>#{{ $order->id }}</td>
-                        <td>{{ $order->outlet->name }}</td>
-                        <td>Rp {{ number_format($order->total_bill, 0, ',', '.') }}</td>
-                        <td>
-                            @php
-                                $statusText = '';
-                                switch($order->status) {
-                                    case 'pending':
-                                        $statusText = 'Menunggu Konfirmasi Admin';
-                                        break;
-                                    case 'approved':
-                                        $statusText = 'Pesanan Diterima Outlet';
-                                        break;
-                                    case 'preparing':
-                                        $statusText = 'Pesanan Sedang Dibuat';
-                                        break;
-                                    case 'ready':
-                                        $statusText = 'Pesanan Siap Diambil';
-                                        break;
-                                    case 'completed':
-                                        $statusText = 'Pesanan Selesai';
-                                        break;
-                                    default:
-                                        $statusText = ucfirst($order->status);
-                                }
-                            @endphp
-                            <span class="status status-{{ $order->status }}">{{ $statusText }}</span>
-                        </td>
-                        <td>{{ $order->created_at->format('d M Y') }}</td>
-                    </tr>
-                    @empty
-                    <tr><td colspan="5" class="text-center" style="padding: 2rem;">Anda belum pernah membuat pesanan.</td></tr>
-                    @endforelse
-                </tbody>
+    @forelse ($myOrders as $order)
+    <tr>
+        <td>#{{ $order->id }}</td>
+        <td>{{ $order->outlet->name }}</td>
+        <td>Rp {{ number_format($order->total_bill, 0, ',', '.') }}</td>
+        <td>
+            @php
+                $statusText = '';
+                switch($order->status) {
+                    case 'pending':
+                        $statusText = 'Menunggu Konfirmasi';
+                        break;
+                    case 'approved':
+                        $statusText = 'Diterima oleh Outlet';
+                        break;
+                    case 'preparing':
+                        $statusText = 'Sedang Dibuat';
+                        break;
+                    case 'completed':
+                        $statusText = 'Selesai';
+                        break;
+                    default:
+                        $statusText = ucfirst($order->status);
+                }
+            @endphp
+            <span class="status status-{{ $order->status }}">{{ $statusText }}</span>
+        </td>
+        <td>{{ $order->created_at->format('d M Y') }}</td>
+    </tr>
+    @empty
+    <tr><td colspan="5" class="text-center" style="padding: 2rem;">Anda belum pernah membuat pesanan.</td></tr>
+    @endforelse
+</tbody>
             </table>
         </div>
     </div>

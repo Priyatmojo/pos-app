@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class OutletController extends Controller
 {
     /**
-     * Menampilkan dashboard dengan pesanan yang perlu diproses.
+     * Menampilkan dashboard dengan pesanan yang perlu dikerjakan.
      */
     public function dashboard()
     {
         $outletId = Auth::user()->outlet_id;
-
+        // Menampilkan pesanan yang baru masuk ('approved') atau sedang dibuat ('preparing')
         $activeOrders = Order::where('outlet_id', $outletId)
-            ->whereIn('status', ['approved', 'preparing', 'ready'])
+            ->whereIn('status', ['approved', 'preparing'])
             ->with('user', 'items.product')
             ->latest()
             ->get();
@@ -26,7 +26,7 @@ class OutletController extends Controller
     }
 
     /**
-     * Outlet mulai menyiapkan pesanan.
+     * Menerima pesanan dan mengubah status menjadi 'preparing'.
      */
     public function startPreparation(Order $order)
     {
@@ -34,51 +34,32 @@ class OutletController extends Controller
             abort(403);
         }
         $order->update(['status' => 'preparing']);
-        return back()->with('success', 'Pesanan #' . $order->id . ' sekarang sedang disiapkan.');
+        return back()->with('success', 'Pesanan #' . $order->id . ' telah diterima dan sedang disiapkan.');
     }
 
     /**
-     * Outlet menandai pesanan siap diambil.
-     */
-    public function markAsReady(Order $order)
-    {
-        if ($order->outlet_id !== Auth::user()->outlet_id || $order->status !== 'preparing') {
-            abort(403);
-        }
-        $order->update(['status' => 'ready']);
-        return back()->with('success', 'Pesanan #' . $order->id . ' telah siap untuk diambil.');
-    }
-
-    /**
-     * Menyelesaikan pesanan (setelah diambil oleh Divisi).
-     * Ini adalah satu-satunya versi yang benar dari method ini.
+     * Menyelesaikan pesanan dan mengubah status menjadi 'completed'.
      */
     public function completeOrder(Order $order)
     {
-        if ($order->outlet_id !== Auth::user()->outlet_id || $order->status !== 'ready') {
+        // Pesanan sekarang bisa diselesaikan langsung dari status 'preparing'
+        if ($order->outlet_id !== Auth::user()->outlet_id || $order->status !== 'preparing') {
             abort(403);
         }
         $order->update(['status' => 'completed']);
         return back()->with('success', 'Pesanan #' . $order->id . ' telah diselesaikan.');
     }
-
-    /**
-     * Menampilkan halaman manajemen produk (menu) untuk outlet ini.
-     */
-    public function products()
-    {
-        $products = Product::where('outlet_id', Auth::user()->outlet_id)->latest()->get();
-        return view('outlet.products.index', compact('products'));
-    }
     
     /**
      * Menampilkan riwayat transaksi yang sudah selesai.
+     * Ini adalah satu-satunya versi yang benar dari method ini.
      */
     public function transactions()
     {
         $completedOrders = Order::where('outlet_id', Auth::user()->outlet_id)
             ->where('status', 'completed')
-            ->with('user')
+            // Eager load detail item untuk ditampilkan di view
+            ->with('user', 'items.product') 
             ->latest()
             ->paginate(15);
 

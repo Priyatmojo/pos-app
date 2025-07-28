@@ -453,4 +453,4 @@ hr.my-4 { border: 0; border-top: 1px solid var(--light-gray); }
 /* ... di dalam bagian === STATUS BADGES === ... */
 
 .status-preparing { background-color: #FEF08A; color: #A16207; } /* Yellow */
-.status-ready { background-color: #BFDBFE; color: #1E40AF; } /* Blue */
+/* .status-ready { background-color: #BFDBFE; color: #1E40AF; } Blue */

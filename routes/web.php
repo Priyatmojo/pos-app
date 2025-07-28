@@ -5,8 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\OutletController as AdminOutletController;
 use App\Http\Controllers\Admin\DivisionController as AdminDivisionController;
+use App\Http\Controllers\Admin\OutletUserController as AdminOutletUserController;
 use App\Http\Controllers\Outlet\ProductController as OutletProductController;
 
 /*
@@ -27,32 +29,32 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middle
 // Grup Rute yang memerlukan login
 Route::middleware(['auth'])->group(function () {
 
-    // RUTE PROFIL DI SINI
-    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'updateProfile'])->name('profile.update');
-    Route::patch('/profile/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    // Rute Profil untuk semua role
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
     // Rute untuk ADMIN
     Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::patch('/orders/{order}/approve', [AdminController::class, 'approveOrder'])->name('approveOrder');
         Route::get('/recap', [AdminController::class, 'transactionRecap'])->name('recap');
-        Route::resource('outlet-users', \App\Http\Controllers\Admin\OutletUserController::class);
 
-        // --- PERBAIKAN URUTAN RUTE ---
-        // Rute spesifik ('/approved') harus didefinisikan SEBELUM rute parameter ('/{order}').
+        // Rute Pembayaran
         Route::get('/orders/approved', [AdminController::class, 'approvedOrders'])->name('orders.approved');
         Route::get('/orders/{order}', [AdminController::class, 'show'])->name('orders.show');
         Route::post('/orders/{order}/payments', [AdminController::class, 'storePayment'])->name('orders.payments.store');
-        // --- AKHIR PERBAIKAN ---
 
+        // Rute Resource untuk Manajemen
         Route::resource('outlets', AdminOutletController::class);
         Route::resource('divisions', AdminDivisionController::class);
+        Route::resource('outlet-users', AdminOutletUserController::class);
     });
 
     // Rute untuk OUTLET
     Route::middleware(['role:outlet'])->prefix('outlet')->name('outlet.')->group(function () {
         Route::get('/dashboard', [OutletController::class, 'dashboard'])->name('dashboard');
+        Route::patch('/orders/{order}/prepare', [OutletController::class, 'startPreparation'])->name('orders.prepare');
         Route::patch('/orders/{order}/complete', [OutletController::class, 'completeOrder'])->name('completeOrder');
         Route::get('/transactions', [OutletController::class, 'transactions'])->name('transactions');
         Route::resource('products', OutletProductController::class);
