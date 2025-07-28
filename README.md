@@ -111,7 +111,7 @@ Anda dapat login menggunakan akun default yang dibuat oleh seeder:
 - Password: `password`
 
 **Divisi:**
-- Username: `divisi_marketing`
+- Username: `marketing`
 - Password: `password`
 
 ---
