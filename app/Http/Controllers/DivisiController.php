@@ -54,6 +54,7 @@ class DivisiController extends Controller
                     'price_per_item' => $product->price,
                     'product_name' => $product->name, // Simpan nama untuk pesan error
                     'current_stock' => $product->stock, // Simpan stok untuk validasi
+                    'description' => $product->description, // Simpan deskripsi untuk detail pesanan
                 ];
             }
         }

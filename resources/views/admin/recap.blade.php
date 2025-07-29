@@ -76,3 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endpush
+
+{{-- Tambahkan baris ini di akhir file --}}
+@endsection

@@ -21,20 +21,44 @@ class UserSeeder extends Seeder
 
         // 2. User Outlet
         User::create([
-            'name' => 'Kasir Outlet Pusat',
-            'username' => 'outlet_pusat',
+            'name' => 'Kasir Outlet A',
+            'username' => 'outletA',
             'email' => 'outlet1@example.com',
             'password' => Hash::make('password'),
             'role' => 'outlet',
-            'outlet_id' => 1, // Sesuaikan dengan ID Outlet Pusat
+            'outlet_id' => 1, // Sesuaikan dengan ID Outlet A
         ]);
         User::create([
-            'name' => 'Kasir Outlet Surabaya',
-            'username' => 'outlet_surabaya',
+            'name' => 'Kasir Outlet B',
+            'username' => 'outletB',
             'email' => 'outlet2@example.com',
             'password' => Hash::make('password'),
             'role' => 'outlet',
-            'outlet_id' => 2, // Sesuaikan dengan ID Outlet Surabaya
+            'outlet_id' => 2, // Sesuaikan dengan ID Outlet B
+        ]);
+        User::create([
+            'name' => 'Kasir Outlet C',
+            'username' => 'outletC',
+            'email' => 'outlet3@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'outlet',
+            'outlet_id' => 3, // Sesuaikan dengan ID Outlet C
+        ]);
+        User::create([
+            'name' => 'Kasir Outlet D',
+            'username' => 'outletD',
+            'email' => 'outlet4@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'outlet',
+            'outlet_id' => 4, // Sesuaikan dengan ID Outlet D
+        ]);
+        User::create([
+            'name' => 'Kasir Outlet E',
+            'username' => 'outletE',
+            'email' => 'outlet5@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'outlet',
+            'outlet_id' => 5, // Sesuaikan dengan ID Outlet E
         ]);
 
         // 3. User Divisi
