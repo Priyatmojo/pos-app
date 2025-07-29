@@ -10,27 +10,27 @@ class OutletSeeder extends Seeder
     public function run(): void
     {
         Outlet::create([
-            'name' => 'Outlet A',
+            'name' => 'Outlet Kemel',
             'address' => '-',
         ]);
 
         Outlet::create([
-            'name' => 'Outlet B',
+            'name' => 'Outlet Jormel',
             'address' => '-',
         ]);
 
         Outlet::create([
-            'name' => 'Outlet C',
+            'name' => 'Outlet Bimskuy',
             'address' => '-',
         ]);
 
         Outlet::create([
-            'name' => 'Outlet D',
+            'name' => 'Outlet Kursi',
             'address' => '-',
         ]);
 
         Outlet::create([
-            'name' => 'Outlet E',
+            'name' => 'Outlet Kebun',
             'address' => '-',
         ]);
     }

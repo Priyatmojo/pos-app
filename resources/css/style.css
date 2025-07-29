@@ -266,11 +266,6 @@ textarea.form-control {
     color: #6B7280;
     margin-bottom: 1rem;
 }
-.product-card-body .description{
-    font-size: 0.1rem;
-    color: #050505;
-    margin-bottom: 1rem;
-}
 
 .product-card-body .stock-info {
     font-size: 0.8rem;
